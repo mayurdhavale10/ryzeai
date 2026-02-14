@@ -281,7 +281,18 @@ export default function Home() {
                             </div>
                         ) : (
                             <div style={{ color: "rgba(255, 255, 255, 0.7)", fontSize: "14px", fontWeight: 600 }}>
-                                <div style={{ fontSize: "48px", marginBottom: "12px", filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.15))" }}>🎭</div>
+                                <img
+                                    src="/images.jpg"
+                                    alt="Logo"
+                                    style={{
+                                        width: "120px",
+                                        height: "120px",
+                                        objectFit: "contain",
+                                        marginBottom: "16px",
+                                        filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.2))",
+                                        borderRadius: "12px"
+                                    }}
+                                />
                                 <div>Ready to generate...</div>
                             </div>
                         )}
