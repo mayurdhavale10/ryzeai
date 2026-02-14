@@ -51,19 +51,24 @@ export async function POST(req: Request) {
                     messages: [
                         {
                             role: "system",
-                            content: `You are a UI planner. You may ONLY use these components:
-              - Button (props: label, variant)
-              - Card (props: title, content, variant)
-              - Input (props: placeholder, type, label)
-              - Table (props: headers, rows)
-              - Modal (props: title, content, variant)
-              - Navbar (props: brand, links)
-              - Sidebar (props: title, items)
-              - Chart (props: title, data, type)
-              
-              Current UI state: ${JSON.stringify(currentTree)}
-              The user wants to modify this UI. Return the FULL updated JSON array.
-              Return ONLY valid JSON.`,
+                            content: `You are a UI planner. You MUST respond with ONLY a JSON array, nothing else.
+
+Available components:
+- Button (props: label, variant)
+- Card (props: title, content, variant)
+- Input (props: placeholder, type, label)
+- Table (props: headers, rows)
+- Modal (props: title, content, variant)
+- Navbar (props: brand, links)
+- Sidebar (props: title, items)
+- Chart (props: title, data, type)
+
+Current UI state: ${JSON.stringify(currentTree)}
+
+CRITICAL: Return ONLY a JSON array. Do not include explanations, markdown, or any text outside the array.
+
+Example response format:
+[{"type":"Button","props":{"label":"Click Me","variant":"primary"}}]`,
                         },
                         { role: "user", content: prompt },
                     ],
@@ -71,9 +76,30 @@ export async function POST(req: Request) {
                 }, { timeout: 10000 })
 
                 const rawContent = completion.choices[0].message.content || "[]"
-                const cleanContent = rawContent.replace(/```json|```/g, "").trim()
-                tree = JSON.parse(cleanContent)
-                explanation = "AI updated the UI based on your instructions."
+                console.log("🤖 Raw AI Response:", rawContent)
+
+                // Clean up the response - handle multiple formats
+                let cleanContent = rawContent.trim()
+
+                // Remove markdown code blocks if present
+                cleanContent = cleanContent.replace(/```json\n?/g, "").replace(/```\n?/g, "")
+
+                // Try to extract JSON array from text
+                const jsonMatch = cleanContent.match(/\[[\s\S]*\]/)
+                if (jsonMatch) {
+                    cleanContent = jsonMatch[0]
+                }
+
+                console.log("🧹 Cleaned Content:", cleanContent)
+
+                try {
+                    tree = JSON.parse(cleanContent)
+                    explanation = "AI updated the UI based on your instructions."
+                } catch (parseError: any) {
+                    console.error("❌ JSON Parse Error:", parseError.message)
+                    console.error("Failed to parse:", cleanContent)
+                    // Fall through to mock mode
+                }
 
                 console.log(`✅ Using ${getModel()} - Success`)
             } catch (apiError: any) {
