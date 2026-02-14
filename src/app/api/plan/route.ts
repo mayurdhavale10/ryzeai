@@ -51,24 +51,32 @@ export async function POST(req: Request) {
                     messages: [
                         {
                             role: "system",
-                            content: `You are a UI planner. You MUST respond with ONLY a JSON array, nothing else.
+                            content: `You are a UI planner. You MUST respond with ONLY a flat JSON array of components.
+
+CRITICAL RULES:
+1. Return a FLAT array - do NOT nest components inside each other
+2. Each component is a separate item in the array
+3. Props must be simple values (strings only), NOT objects or arrays
 
 Available components:
-- Button (props: label, variant)
-- Card (props: title, content, variant)
-- Input (props: placeholder, type, label)
-- Table (props: headers, rows)
-- Modal (props: title, content, variant)
-- Navbar (props: brand, links)
-- Sidebar (props: title, items)
-- Chart (props: title, data, type)
+- Button (props: label [string], variant [string])
+- Card (props: title [string], content [string], variant [string])
+- Input (props: placeholder [string], type [string], label [string])
+- Table (props: headers [string], rows [string])
+- Modal (props: title [string], content [string], variant [string])
+- Navbar (props: brand [string], links [string])
+- Sidebar (props: title [string], items [string])
+- Chart (props: title [string], data [string], type [string])
 
-Current UI state: ${JSON.stringify(currentTree)}
+Current UI: ${JSON.stringify(currentTree)}
 
-CRITICAL: Return ONLY a JSON array. Do not include explanations, markdown, or any text outside the array.
+WRONG (nested):
+[{"type":"Card","props":{"content":[{"type":"Button"}]}}]
 
-Example response format:
-[{"type":"Button","props":{"label":"Click Me","variant":"primary"}}]`,
+CORRECT (flat):
+[{"type":"Card","props":{"title":"Title","content":"Description"}},{"type":"Button","props":{"label":"Click"}}]
+
+Return ONLY the JSON array, no explanations.`,
                         },
                         { role: "user", content: prompt },
                     ],
