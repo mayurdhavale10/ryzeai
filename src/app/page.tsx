@@ -65,7 +65,7 @@ export default function Home() {
                 display: "grid",
                 gridTemplateColumns: "380px 1fr 1fr",
                 height: "100vh",
-                background: "linear-gradient(135deg, #F05023 0%, #FF8A65 100%)",
+                background: "#FFFFFF",
                 fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
                 padding: "20px",
                 gap: "20px"
@@ -73,29 +73,42 @@ export default function Home() {
         >
             {/* LEFT PANEL */}
             <div style={{
-                background: "rgba(255, 255, 255, 0.15)",
+                background: "rgba(255, 255, 255, 0.95)",
                 backdropFilter: "blur(20px)",
                 borderRadius: "24px",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
+                border: "2px solid #E0E0E0",
                 padding: "32px",
                 display: "flex",
                 flexDirection: "column",
                 gap: "24px",
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)"
+                boxShadow: "0 4px 24px rgba(240, 80, 35, 0.08)"
             }}>
-                <div>
-                    <h1 style={{
-                        fontSize: "28px",
-                        fontWeight: 800,
-                        marginBottom: "8px",
-                        color: "#FFFFFF",
-                        textShadow: "0 2px 10px rgba(0,0,0,0.2)"
-                    }}>
-                        ✨ AI Workspace
-                    </h1>
-                    <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.9)", margin: 0, fontWeight: 500 }}>
-                        Deterministic UI • 8 Components
-                    </p>
+                <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                    <img
+                        src="/images.jpg"
+                        alt="Ryze AI Logo"
+                        style={{
+                            width: "56px",
+                            height: "56px",
+                            objectFit: "contain",
+                            borderRadius: "12px",
+                            boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
+                        }}
+                    />
+                    <div>
+                        <h1 style={{
+                            fontSize: "24px",
+                            fontWeight: 800,
+                            marginBottom: "4px",
+                            color: "#F05023",
+                            letterSpacing: "-0.5px"
+                        }}>
+                            Ryze AI
+                        </h1>
+                        <p style={{ fontSize: "12px", color: "#666", margin: 0, fontWeight: 500 }}>
+                            Deterministic UI Engine
+                        </p>
+                    </div>
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
@@ -109,17 +122,18 @@ export default function Home() {
                             height: "110px",
                             padding: "16px",
                             borderRadius: "16px",
-                            border: "1px solid rgba(255, 255, 255, 0.3)",
+                            border: "2px solid #E0E0E0",
                             fontSize: "14px",
                             resize: "none",
                             outline: "none",
                             fontFamily: "inherit",
-                            background: "rgba(255, 255, 255, 0.2)",
-                            backdropFilter: "blur(10px)",
-                            color: "#FFFFFF",
+                            background: "#FFFFFF",
+                            color: "#333",
                             fontWeight: 500,
-                            boxShadow: "inset 0 2px 5px rgba(0,0,0,0.1)"
+                            transition: "all 0.2s"
                         }}
+                        onFocus={(e) => e.target.style.borderColor = "#F05023"}
+                        onBlur={(e) => e.target.style.borderColor = "#E0E0E0"}
                     />
                     <button
                         onClick={generateUI}
@@ -127,17 +141,19 @@ export default function Home() {
                         style={{
                             width: "100%",
                             padding: "16px",
-                            background: loading ? "rgba(224, 224, 224, 0.3)" : "#FFFFFF",
-                            color: loading ? "#FFFFFF" : "#F05023",
+                            background: loading ? "#E0E0E0" : "#F05023",
+                            color: "#FFFFFF",
                             border: "none",
                             borderRadius: "16px",
                             cursor: loading ? "not-allowed" : "pointer",
                             fontWeight: 700,
                             fontSize: "15px",
-                            boxShadow: loading ? "none" : "0 4px 20px rgba(0,0,0,0.15)",
+                            boxShadow: loading ? "none" : "0 4px 16px rgba(240, 80, 35, 0.3)",
                             transition: "all 0.3s ease",
                             transform: loading ? "scale(0.98)" : "scale(1)"
                         }}
+                        onMouseEnter={(e) => !loading && (e.currentTarget.style.background = "#D94419")}
+                        onMouseLeave={(e) => !loading && (e.currentTarget.style.background = "#F05023")}
                     >
                         {loading ? "⚡ Generating..." : "✨ Generate UI"}
                     </button>
@@ -146,24 +162,22 @@ export default function Home() {
                 {current && (
                     <div style={{
                         padding: "20px",
-                        background: "rgba(255, 255, 255, 0.25)",
-                        backdropFilter: "blur(15px)",
+                        background: "linear-gradient(135deg, #FFF5F2 0%, #FFEEE8 100%)",
                         borderRadius: "20px",
-                        border: "1px solid rgba(255, 255, 255, 0.4)",
-                        boxShadow: "0 4px 16px rgba(0,0,0,0.1)"
+                        border: "2px solid #FFE0D6",
+                        boxShadow: "0 2px 12px rgba(240, 80, 35, 0.08)"
                     }}>
                         <h4 style={{
                             fontSize: "11px",
                             fontWeight: 800,
-                            color: "#FFFFFF",
+                            color: "#F05023",
                             marginBottom: "10px",
                             textTransform: "uppercase",
-                            letterSpacing: "1px",
-                            opacity: 0.95
+                            letterSpacing: "1px"
                         }}>
                             💡 AI Reasoning
                         </h4>
-                        <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.95)", lineHeight: "1.6", margin: 0, fontWeight: 500 }}>
+                        <p style={{ fontSize: "13px", color: "#666", lineHeight: "1.6", margin: 0, fontWeight: 500 }}>
                             {current.explanation}
                         </p>
                     </div>
@@ -172,24 +186,23 @@ export default function Home() {
 
             {/* MIDDLE PANEL - CODE */}
             <div style={{
-                background: "rgba(255, 255, 255, 0.15)",
-                backdropFilter: "blur(20px)",
+                background: "#FFFFFF",
                 borderRadius: "24px",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
+                border: "2px solid #E0E0E0",
                 display: "flex",
                 flexDirection: "column",
                 overflow: "hidden",
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)"
+                boxShadow: "0 4px 24px rgba(0, 0, 0, 0.06)"
             }}>
                 <div style={{
                     padding: "24px 28px",
-                    borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
-                    background: "rgba(255, 255, 255, 0.1)",
+                    borderBottom: "2px solid #E0E0E0",
+                    background: "#FAFAFA",
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center"
                 }}>
-                    <h2 style={{ fontSize: "16px", fontWeight: 700, color: "#FFFFFF", margin: 0, letterSpacing: "0.3px" }}>
+                    <h2 style={{ fontSize: "16px", fontWeight: 700, color: "#333", margin: 0, letterSpacing: "0.3px" }}>
                         📝 Generated Code
                     </h2>
                     <button
@@ -201,14 +214,14 @@ export default function Home() {
                         style={{
                             padding: "8px 16px",
                             fontSize: "12px",
-                            background: current ? "rgba(255, 255, 255, 0.25)" : "rgba(255, 255, 255, 0.1)",
-                            backdropFilter: "blur(10px)",
-                            border: "1px solid rgba(255, 255, 255, 0.3)",
+                            background: current ? "#F05023" : "#E0E0E0",
+                            border: "none",
                             borderRadius: "10px",
                             cursor: current ? "pointer" : "not-allowed",
                             fontWeight: 600,
                             color: "#FFFFFF",
-                            transition: "all 0.2s"
+                            transition: "all 0.2s",
+                            boxShadow: current ? "0 2px 8px rgba(240, 80, 35, 0.3)" : "none"
                         }}
                     >
                         📋 Copy
@@ -216,8 +229,7 @@ export default function Home() {
                 </div>
                 <div style={{
                     flex: 1,
-                    background: "rgba(15, 23, 42, 0.8)",
-                    backdropFilter: "blur(10px)",
+                    background: "#0f172a",
                     color: "#e2e8f0",
                     padding: "28px",
                     overflow: "auto",
@@ -237,21 +249,20 @@ export default function Home() {
 
             {/* RIGHT PANEL - PREVIEW */}
             <div style={{
-                background: "rgba(255, 255, 255, 0.15)",
-                backdropFilter: "blur(20px)",
+                background: "#FFFFFF",
                 borderRadius: "24px",
-                border: "1px solid rgba(255, 255, 255, 0.3)",
+                border: "2px solid #E0E0E0",
                 display: "flex",
                 flexDirection: "column",
                 overflow: "hidden",
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)"
+                boxShadow: "0 4px 24px rgba(0, 0, 0, 0.06)"
             }}>
                 <div style={{
                     padding: "24px 28px",
-                    borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
-                    background: "rgba(255, 255, 255, 0.1)"
+                    borderBottom: "2px solid #E0E0E0",
+                    background: "#FAFAFA"
                 }}>
-                    <h2 style={{ fontSize: "16px", fontWeight: 700, color: "#FFFFFF", margin: 0, letterSpacing: "0.3px" }}>
+                    <h2 style={{ fontSize: "16px", fontWeight: 700, color: "#333", margin: 0, letterSpacing: "0.3px" }}>
                         🎨 Live Preview
                     </h2>
                 </div>
@@ -262,17 +273,16 @@ export default function Home() {
                     alignItems: "center",
                     justifyContent: "center",
                     overflow: "auto",
-                    background: "rgba(224, 224, 224, 0.08)"
+                    background: "#FAFAFA"
                 }}>
                     <div style={{
                         padding: current ? "48px" : "80px",
-                        background: "rgba(255, 255, 255, 0.95)",
-                        backdropFilter: "blur(15px)",
+                        background: "#FFFFFF",
                         borderRadius: "24px",
-                        boxShadow: current ? "0 20px 60px rgba(0, 0, 0, 0.25)" : "none",
+                        boxShadow: current ? "0 8px 32px rgba(0, 0, 0, 0.12)" : "none",
                         minWidth: current ? "320px" : "240px",
                         textAlign: "center",
-                        border: current ? "1px solid rgba(255, 255, 255, 0.5)" : "2px dashed rgba(255, 255, 255, 0.4)",
+                        border: current ? "2px solid #E0E0E0" : "3px dashed #E0E0E0",
                         transition: "all 0.3s ease"
                     }}>
                         {current ? (
@@ -280,7 +290,7 @@ export default function Home() {
                                 <Renderer tree={current.tree} />
                             </div>
                         ) : (
-                            <div style={{ color: "rgba(255, 255, 255, 0.7)", fontSize: "14px", fontWeight: 600 }}>
+                            <div style={{ color: "#999", fontSize: "14px", fontWeight: 600 }}>
                                 <img
                                     src="/images.jpg"
                                     alt="Logo"
@@ -289,7 +299,7 @@ export default function Home() {
                                         height: "120px",
                                         objectFit: "contain",
                                         marginBottom: "16px",
-                                        filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.2))",
+                                        filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.15))",
                                         borderRadius: "12px"
                                     }}
                                 />
